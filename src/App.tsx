@@ -1,4 +1,4 @@
-import React, { Profiler } from "react";
+import { Profiler } from "react";
 import { useState } from "react";
 import "./App.css";
 import { CellData } from "./hooks/useGridController";
@@ -13,14 +13,14 @@ function App() {
     startTime: number,
     commitTime: number
   ) {
-    // console.log({
-    //   id,
-    //   phase,
-    //   actualDuration,
-    //   baseDuration,
-    //   startTime,
-    //   commitTime,
-    // });
+    console.log({
+      id,
+      phase,
+      actualDuration,
+      baseDuration,
+      startTime,
+      commitTime,
+    });
   }
 
   const [gridSize, setGridSize] = useState<number>(20);

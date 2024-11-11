@@ -40,7 +40,10 @@ export default function Game({
           {Array.from({ length: gridSize }).map((_, rowIndex) => (
             <div className="columns">
               {Array.from({ length: gridSize }).map((_, colIndex) => (
-                <button onClick={() => setCell(rowIndex, colIndex)} className="cell-btn">
+                <button
+                  onClick={() => setCell(rowIndex, colIndex)}
+                  className="cell-btn"
+                >
                   <Cell
                     row={rowIndex}
                     col={colIndex}
