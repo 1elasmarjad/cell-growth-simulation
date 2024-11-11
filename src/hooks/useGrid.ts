@@ -17,24 +17,41 @@ export function useGrid({ rows, cols }: { rows: number; cols: number }) {
   const [divideInterval, setDivideInterval] = useState<number>(
     DEFAULT_DIVIDE_INTERVAL
   );
+  const [lifeSpan, setLifeSpan] = useState<number>(6);
+  const [divisonProbability, setDivisionProbability] = useState<number>(0.5);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      // this runs every "divideInterval" milliseconds
-      // TODO
-    }, divideInterval);
+    const interval = setInterval(() => {}, divideInterval);
 
     return () => clearInterval(interval); // cleanup when the component unmounts
-  }, [divideInterval]);
+  }, [divideInterval, lifeSpan]);
 
   // gets cell data at a specific row and column
   function getCell(row: number, col: number): CellData {
     return grid[row][col];
   }
 
+  // sets cell data at a specific row and column
+  function toggleCell(row: number, col: number) {
+    setGrid((prevGrid) => {
+      const newGrid = [...prevGrid];
+      newGrid[row] = [...prevGrid[row]];
+
+      const oldData = prevGrid[row][col];
+
+      newGrid[row][col] = {
+        ...oldData,
+        occupied: !oldData.occupied,
+      };
+
+      return newGrid;
+    });
+  }
+
   return {
     grid,
     getCell,
     setDivideInterval,
+    setCell: toggleCell,
   };
 }
