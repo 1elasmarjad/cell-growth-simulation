@@ -35,21 +35,24 @@ export default function Game({
 
   return (
     <>
-      <div className="rows root-reset">
-        {Array.from({ length: gridSize }).map((_, rowIndex) => (
-          <div className="columns">
-            {Array.from({ length: gridSize }).map((_, colIndex) => (
-              <button onClick={() => setCell(rowIndex, colIndex)}>
-                <Cell
-                  row={rowIndex}
-                  col={colIndex}
-                  occupied={getCell(rowIndex, colIndex).occupied}
-                />
-              </button>
-            ))}
-          </div>
-        ))}
+      <div className="grid-parent">
+        <div className="rows">
+          {Array.from({ length: gridSize }).map((_, rowIndex) => (
+            <div className="columns">
+              {Array.from({ length: gridSize }).map((_, colIndex) => (
+                <button onClick={() => setCell(rowIndex, colIndex)} className="cell-btn">
+                  <Cell
+                    row={rowIndex}
+                    col={colIndex}
+                    occupied={getCell(rowIndex, colIndex).occupied}
+                  />
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
+
       <Controls
         paused={paused}
         togglePaused={() => {
