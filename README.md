@@ -12,3 +12,11 @@ The React hook `useGridController` manages the majority of the logic of the bact
 - The default probability for cell spawns is not provided, so I chose a default value that provided the most meaningful simulation.
 
 # Performance Analysis
+- Using Google Chromes performence tools, the JS heap size is 35.2-64.0 mb, initially starting at 64.0 mb and averaging around ~40.0 mb. 
+- The Largest Contentful Paint was 413 ms, and the local Cumulative Layout Shift value was 0.
+- Using react profiler, on mount the actual duration is ~17.5 s whereas the base duration is ~11 s.
+- During the average re-render/update, the actual duration is ~10 s and the base duration is ~9 s
+
+![image](https://github.com/user-attachments/assets/cbdeb57b-2eb8-4f64-ab72-4247353c6b61)
+![image](https://github.com/user-attachments/assets/150e2a4b-85c4-4b22-8b98-7d4753f17ba7)
+
