@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export type CellData = {
   occupied: boolean; // alive or dead
   age: number; // the age of the cell in seconds; this resets to 0 when the cell is no longer occupied
 };
-
-const DEFAULT_DIVIDE_INTERVAL = 1000;
 
 export function useGridController({
   rows,
@@ -13,19 +11,19 @@ export function useGridController({
   paused,
   grid,
   setGrid,
+  options,
 }: {
   rows: number;
   cols: number;
   paused: boolean;
   grid: CellData[][];
   setGrid: React.Dispatch<React.SetStateAction<CellData[][]>>;
+  options: {
+    divideInterval: number;
+    lifeSpan: number;
+    divisionProbability: number;
+  };
 }) {
-  const [divideInterval, setDivideInterval] = useState<number>(
-    DEFAULT_DIVIDE_INTERVAL
-  );
-  const [lifeSpan, setLifeSpan] = useState<number>(6);
-  const [divisionProbability, setDivisionProbability] = useState<number>(0.5);
-
   useEffect(() => {
     if (paused) return; // do nothing if paused
 
@@ -42,9 +40,7 @@ export function useGridController({
 
             const newAge = oldData.age + 1; // increment cell age
 
-            console.log(newAge);
-
-            if (newAge >= lifeSpan) {
+            if (newAge >= options.lifeSpan) {
               newGrid[row][col] = {
                 occupied: false, // kill the cell
                 age: 0,
@@ -78,7 +74,7 @@ export function useGridController({
               for (const loc of emptyNeighbors) {
                 const [r, c] = loc; // location of the empty neighbor
 
-                if (Math.random() < divisionProbability) {
+                if (Math.random() < options.divisionProbability) {
                   newGrid[r] = [...prevGrid[r]];
                   newGrid[r][c] = {
                     occupied: true, // create a new cell
@@ -91,14 +87,14 @@ export function useGridController({
         }
         return newGrid;
       });
-    }, divideInterval);
+    }, options.divideInterval);
 
     return () => clearInterval(interval); // cleanup when the component unmounts
   }, [
     cols,
-    divideInterval,
-    divisionProbability,
-    lifeSpan,
+    options.divideInterval,
+    options.divisionProbability,
+    options.lifeSpan,
     paused,
     rows,
     setGrid,
@@ -128,7 +124,6 @@ export function useGridController({
 
   return {
     getCell,
-    setDivideInterval,
     setCell: toggleCell,
   };
 }
