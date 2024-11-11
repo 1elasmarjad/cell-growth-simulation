@@ -75,7 +75,6 @@ export function useGridController({
                 const [r, c] = loc; // location of the empty neighbor
 
                 if (Math.random() < options.divisionProbability) {
-                  newGrid[r] = [...prevGrid[r]];
                   newGrid[r][c] = {
                     occupied: true, // create a new cell
                     age: 0,
