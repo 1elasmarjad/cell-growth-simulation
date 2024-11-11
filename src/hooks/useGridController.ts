@@ -123,6 +123,6 @@ export function useGridController({
 
   return {
     getCell,
-    setCell: toggleCell,
+    toggleCell,
   };
 }

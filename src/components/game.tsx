@@ -20,7 +20,7 @@ export default function Game({
   const [lifeSpan, setLifeSpan] = useState<number>(6);
   const [divisionProbability, setDivisionProbability] = useState<number>(0.1);
 
-  const { getCell, setCell } = useGridController({
+  const { getCell, toggleCell } = useGridController({
     grid,
     rows: gridSize,
     cols: gridSize,
@@ -41,7 +41,7 @@ export default function Game({
             <div className="columns">
               {Array.from({ length: gridSize }).map((_, colIndex) => (
                 <button
-                  onClick={() => setCell(rowIndex, colIndex)}
+                  onClick={() => toggleCell(rowIndex, colIndex)}
                   className="cell-btn"
                 >
                   <Cell
