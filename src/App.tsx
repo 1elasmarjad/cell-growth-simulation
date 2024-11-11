@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Cell from "./components/cell";
+import { useGrid } from "./hooks/useGrid";
 
 function App() {
+  const [gridSize, setGridSize] = useState<number>(10);
+
+  const { grid, getCell } = useGrid({
+    rows: gridSize,
+    cols: gridSize,
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="rows">
+      {Array.from({ length: gridSize }).map((_, rowIndex) => (
+        <div className="columns">
+          {Array.from({ length: gridSize }).map((_, colIndex) => (
+            <Cell
+              row={rowIndex}
+              col={colIndex}
+              occupied={getCell(rowIndex, colIndex).occupied}
+            />
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
