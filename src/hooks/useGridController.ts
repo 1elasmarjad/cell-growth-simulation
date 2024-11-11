@@ -7,16 +7,19 @@ export type CellData = {
 
 const DEFAULT_DIVIDE_INTERVAL = 1000;
 
-export function useGrid({ rows, cols }: { rows: number; cols: number }) {
-  const [grid, setGrid] = useState<CellData[][]>(() =>
-    Array.from({ length: rows }, () =>
-      Array.from({ length: cols }, () => ({
-        occupied: Math.random() < 0.2,
-        age: 0,
-      }))
-    )
-  );
-
+export function useGridController({
+  rows,
+  cols,
+  paused,
+  grid,
+  setGrid,
+}: {
+  rows: number;
+  cols: number;
+  paused: boolean;
+  grid: CellData[][];
+  setGrid: React.Dispatch<React.SetStateAction<CellData[][]>>;
+}) {
   const [divideInterval, setDivideInterval] = useState<number>(
     DEFAULT_DIVIDE_INTERVAL
   );
@@ -24,6 +27,8 @@ export function useGrid({ rows, cols }: { rows: number; cols: number }) {
   const [divisionProbability, setDivisionProbability] = useState<number>(0.5);
 
   useEffect(() => {
+    if (paused) return; // do nothing if paused
+
     const interval = setInterval(() => {
       setGrid((prevGrid) => {
         const newGrid = [...prevGrid];
@@ -89,7 +94,15 @@ export function useGrid({ rows, cols }: { rows: number; cols: number }) {
     }, divideInterval);
 
     return () => clearInterval(interval); // cleanup when the component unmounts
-  }, [cols, divideInterval, lifeSpan, rows]);
+  }, [
+    cols,
+    divideInterval,
+    divisionProbability,
+    lifeSpan,
+    paused,
+    rows,
+    setGrid,
+  ]);
 
   // gets cell data at a specific row and column
   function getCell(row: number, col: number): CellData {
@@ -114,7 +127,6 @@ export function useGrid({ rows, cols }: { rows: number; cols: number }) {
   }
 
   return {
-    grid,
     getCell,
     setDivideInterval,
     setCell: toggleCell,
