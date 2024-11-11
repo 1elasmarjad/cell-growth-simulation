@@ -14,7 +14,7 @@ export default function Game({
   gridSize: number;
   resetGrid: () => void;
 }) {
-  const [paused, setPaused] = useState<boolean>(false);
+  const [paused, setPaused] = useState<boolean>(true);
 
   const [divideInterval, setDivideInterval] = useState<number>(1000);
   const [lifeSpan, setLifeSpan] = useState<number>(6);

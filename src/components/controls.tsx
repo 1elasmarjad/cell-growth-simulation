@@ -1,14 +1,4 @@
-export default function Controls({
-  paused,
-  togglePaused,
-  reset,
-  lifespan,
-  setLifeSpan,
-  divideInterval,
-  setDivideInterval,
-  divisionProbability,
-  setDivisionProbability,
-}: {
+interface ControlsProps {
   paused: boolean;
   togglePaused: () => void;
   reset: () => void;
@@ -21,7 +11,19 @@ export default function Controls({
 
   divisionProbability: number;
   setDivisionProbability: (value: number) => void;
-}) {
+}
+
+export default function Controls({
+  paused,
+  togglePaused,
+  reset,
+  lifespan,
+  setLifeSpan,
+  divideInterval,
+  setDivideInterval,
+  divisionProbability,
+  setDivisionProbability,
+}: ControlsProps) {
   return (
     <div className="controls">
       <div className="time-controls">
@@ -29,7 +31,7 @@ export default function Controls({
         <button onClick={reset}>Reset</button>
       </div>
 
-      <div>
+      <div className="field">
         <label htmlFor="speed">Division Slowness</label>
         <input
           name="speed"
@@ -43,7 +45,7 @@ export default function Controls({
         />
       </div>
 
-      <div>
+      <div className="field">
         <label htmlFor="lifespan">Lifespan</label>
         <input
           name="lifespan"
@@ -57,7 +59,7 @@ export default function Controls({
         />
       </div>
 
-      <div>
+      <div className="field">
         <label htmlFor="divprob">Division Probability</label>
         <input
           name="divprob"
