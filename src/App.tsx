@@ -4,7 +4,7 @@ import Cell from "./components/cell";
 import { useGrid } from "./hooks/useGrid";
 
 function App() {
-  const [gridSize, setGridSize] = useState<number>(10);
+  const [gridSize, setGridSize] = useState<number>(20);
 
   const { grid, getCell, setCell } = useGrid({
     rows: gridSize,
